@@ -12,6 +12,7 @@ import ObjectiveC.runtime
 public extension UIMenuController {
   
   override class func initialize() {
+    guard self == UIMenuController.self else { return }
     if true {
       let selector: Selector = "setMenuItems:"
       let origIMP = class_getMethodImplementation(self, selector)
@@ -55,6 +56,7 @@ public extension UIMenuController {
 public extension UILabel {
   
   override class func initialize() {
+    guard self == UILabel.self else { return }
     let selector: Selector = "drawTextInRect:"
     let origIMP = class_getMethodImplementation(self, selector)
     typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> ()
@@ -83,6 +85,7 @@ public extension UILabel {
 public extension NSString {
   
   override class func initialize() {
+    guard self == NSString.self else { return }
     let selector: Selector = "sizeWithAttributes:"
     let origIMP = class_getMethodImplementation(self, selector)
     typealias IMPType = @convention(c) (NSString, Selector, AnyObject) -> CGSize
