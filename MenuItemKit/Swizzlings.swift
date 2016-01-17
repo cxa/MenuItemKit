@@ -9,10 +9,9 @@
 import UIKit
 import ObjectiveC.runtime
 
-public extension UIMenuController {
+extension UIMenuController {
   
-  override class func initialize() {
-    guard self == UIMenuController.self else { return }
+  class func _mik_load() {
     if true {
       let selector: Selector = "setMenuItems:"
       let origIMP = class_getMethodImplementation(self, selector)
@@ -53,10 +52,9 @@ public extension UIMenuController {
   }
 }
 
-public extension UILabel {
+extension UILabel {
   
-  override class func initialize() {
-    guard self == UILabel.self else { return }
+  class func _mik_load() {
     let selector: Selector = "drawTextInRect:"
     let origIMP = class_getMethodImplementation(self, selector)
     typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> ()
@@ -82,10 +80,9 @@ public extension UILabel {
   
 }
 
-public extension NSString {
+extension NSString {
   
-  override class func initialize() {
-    guard self == NSString.self else { return }
+  class func _mik_load() {
     let selector: Selector = "sizeWithAttributes:"
     let origIMP = class_getMethodImplementation(self, selector)
     typealias IMPType = @convention(c) (NSString, Selector, AnyObject) -> CGSize

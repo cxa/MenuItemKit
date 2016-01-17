@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E0DCD1A11C4B957A00CF23F8 /* Swizzlings.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DCD1A01C4B957A00CF23F8 /* Swizzlings.m */; };
 		E0EFAE4E1C49F99300334D78 /* MenuItemKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EFAE4D1C49F99300334D78 /* MenuItemKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E0EFAE551C49F99400334D78 /* MenuItemKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EFAE4A1C49F99300334D78 /* MenuItemKit.framework */; };
 		E0EFAE5A1C49F99400334D78 /* MenuItemKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EFAE591C49F99400334D78 /* MenuItemKitTests.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E0DCD1A01C4B957A00CF23F8 /* Swizzlings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Swizzlings.m; sourceTree = "<group>"; };
 		E0EFAE4A1C49F99300334D78 /* MenuItemKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MenuItemKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0EFAE4D1C49F99300334D78 /* MenuItemKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuItemKit.h; sourceTree = "<group>"; };
 		E0EFAE4F1C49F99300334D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				E0EFAEAA1C4AB8D800334D78 /* Internals.swift */,
 				E0EFAE641C49F9A000334D78 /* UIMenuItem.swift */,
 				E0EFAEA81C4AB8B300334D78 /* Swizzlings.swift */,
+				E0DCD1A01C4B957A00CF23F8 /* Swizzlings.m */,
 			);
 			path = MenuItemKit;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				E0EFAEAB1C4AB8D800334D78 /* Internals.swift in Sources */,
 				E0EFAEA91C4AB8B300334D78 /* Swizzlings.swift in Sources */,
 				E0EFAE651C49F9A000334D78 /* UIMenuItem.swift in Sources */,
+				E0DCD1A11C4B957A00CF23F8 /* Swizzlings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
