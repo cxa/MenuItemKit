@@ -127,6 +127,7 @@ private extension UIMenuController {
   // This is inspired by https://github.com/steipete/PSMenuItem
   static func swizzleClass(klass: AnyClass) {
     objc_sync_enter(klass)
+    defer { objc_sync_exit(klass) }
     let key: StaticString = __FUNCTION__
     guard objc_getAssociatedObject(klass, key.utf8Start) == nil else { return }
     
@@ -192,7 +193,6 @@ private extension UIMenuController {
     }
     
     objc_setAssociatedObject(klass, key.utf8Start, true, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-    objc_sync_exit(klass)
   }
   
 }
