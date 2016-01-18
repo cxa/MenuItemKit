@@ -16,13 +16,15 @@ If you would prefer to use Carthage or CocoaPods, please pull request.
 `MenuItemKit` is very easy to adopt, it provides only 2 APIs:
 
 ``` swift
+typealias MenuItemHandler = (UIMenuItem) -> ()
+
 extension UIMenuItem {
-    convenience init(title: String, handler: MenuItemHandler)
-    convenience init(image: UIImage, handler: MenuItemHandler)
+  convenience init(title: String, handler: MenuItemHandler)
+  convenience init(image: UIImage, handler: MenuItemHandler)
 }
 ```
 
-Just init `UIMenuItem`s via those 2 APIs and set them to `menuItems` of `UIMenuItemController`. `MenuItemKit` will take care of the rest parts, you don't need to add any code related to responder chain in your view or view controller.
+Just init `UIMenuItem`s with above APIs, and set them to `menuItems` of `UIMenuItemController`. `MenuItemKit` will take care of the rest parts, you don't need to add any code related to responder chain in your view or view controller.
 
 `MenuItemKit` is a Swift project but Objective-C is supported without a doubt.
 
