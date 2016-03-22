@@ -23,5 +23,11 @@
   });
 }
 
++ (NSMethodSignature *)_mik_fakeSignature
+{
+  return [NSMethodSignature signatureWithObjCTypes:"v@:@"];
+}
+
+
 
 @end

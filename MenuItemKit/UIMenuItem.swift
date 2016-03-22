@@ -28,12 +28,12 @@ public extension UIMenuItem {
 extension UIMenuItem {
   
   var imageBox: Box<UIImage?> {
-    let key: StaticString = __FUNCTION__
+    let key: StaticString = #function
     return associatedBoxForKey(key, initialValue: { nil })
   }
   
   var handlerBox: Box<MenuItemHandler?> {
-    let key: StaticString = __FUNCTION__
+    let key: StaticString = #function
     return associatedBoxForKey(key, initialValue: { nil })
   }
   

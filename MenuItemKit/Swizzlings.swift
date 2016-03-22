@@ -13,7 +13,7 @@ extension UIMenuController {
   
   class func _mik_load() {
     if true {
-      let selector: Selector = "setMenuItems:"
+      let selector = Selector("setMenuItems:")
       let origIMP = class_getMethodImplementation(self, selector)
       typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> ()
       let origIMPC = unsafeBitCast(origIMP, IMPType.self)
@@ -25,12 +25,11 @@ extension UIMenuController {
         origIMPC($0, selector, $1)
       }
       
-      let newIMP = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-      setNewIMP(newIMP, forSelector: selector, toClass: self)
+      setNewIMPWithBlock(block, forSelector: selector, toClass: self)
     }
     
     if true {
-      let selector: Selector = "setTargetRect:inView:"
+      let selector = #selector(self.setTargetRect(_:inView:))
       let origIMP = class_getMethodImplementation(self, selector)
       typealias IMPType = @convention(c) (AnyObject, Selector, CGRect, UIView) -> ()
       let origIMPC = unsafeBitCast(origIMP, IMPType.self)
@@ -46,16 +45,16 @@ extension UIMenuController {
         origIMPC($0, selector, $1, $2)
       }
       
-      let newIMP = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-      setNewIMP(newIMP, forSelector: selector, toClass: self)
+      setNewIMPWithBlock(block, forSelector: selector, toClass: self)
     }
   }
+  
 }
 
 extension UILabel {
   
   class func _mik_load() {
-    let selector: Selector = "drawTextInRect:"
+    let selector = #selector(self.drawTextInRect(_:))
     let origIMP = class_getMethodImplementation(self, selector)
     typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> ()
     let origIMPC = unsafeBitCast(origIMP, IMPType.self)
@@ -63,19 +62,20 @@ extension UILabel {
       guard
         let text = label.text,
         let item = UIMenuController.sharedMenuController().findMenuItemBySelector(text)
-        else {
-          origIMPC(label, selector, rect)
-          return
+      else {
+        origIMPC(label, selector, rect)
+        return
       }
       
       let image = item.imageBox.value
-      let point = CGPoint(x: (label.bounds.width  - (image?.size.width ?? 0)) / 2,
-        y: (label.bounds.height - (image?.size.height ?? 0)) / 2)
+      let point = CGPoint(
+        x: (label.bounds.width  - (image?.size.width ?? 0))  / 2,
+        y: (label.bounds.height - (image?.size.height ?? 0)) / 2
+      )
       image?.drawAtPoint(point)
     }
     
-    let newIMP = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-    setNewIMP(newIMP, forSelector: selector, toClass: self)
+    setNewIMPWithBlock(block, forSelector: selector, toClass: self)
   }
   
 }
@@ -83,14 +83,14 @@ extension UILabel {
 extension NSString {
   
   class func _mik_load() {
-    let selector: Selector = "sizeWithAttributes:"
+    let selector = #selector(self.sizeWithAttributes(_:))
     let origIMP = class_getMethodImplementation(self, selector)
     typealias IMPType = @convention(c) (NSString, Selector, AnyObject) -> CGSize
     let origIMPC = unsafeBitCast(origIMP, IMPType.self)
     let block: @convention(block) (NSString, AnyObject) -> CGSize = { str, attr in
       let selStr = str as String
       if isMenuItemKitSelector(selStr),
-        let item = UIMenuController.sharedMenuController().findMenuItemBySelector(selStr)
+         let item = UIMenuController.sharedMenuController().findMenuItemBySelector(selStr)
       {
         return item.imageBox.value?.size ?? CGSizeZero
       }
@@ -98,8 +98,7 @@ extension NSString {
       return origIMPC(str, selector, attr)
     }
     
-    let newIMP = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-    setNewIMP(newIMP, forSelector: selector, toClass: self)
+    setNewIMPWithBlock(block, forSelector: selector, toClass: self)
   }
   
 }
@@ -128,20 +127,19 @@ private extension UIMenuController {
   static func swizzleClass(klass: AnyClass) {
     objc_sync_enter(klass)
     defer { objc_sync_exit(klass) }
-    let key: StaticString = __FUNCTION__
+    let key: StaticString = #function
     guard objc_getAssociatedObject(klass, key.utf8Start) == nil else { return }
     
     if true {
       // swizzle canBecomeFirstResponder
-      let selector: Selector = "canBecomeFirstResponder"
+      let selector = #selector(UIResponder.canBecomeFirstResponder)
       let block: @convention(block) (AnyObject) -> Bool = { _ in true }
-      let imp = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-      setNewIMP(imp, forSelector: selector, toClass: klass)
+      setNewIMPWithBlock(block, forSelector: selector, toClass: klass)
     }
     
     if true {
       // swizzle canPerformAction:withSender:
-      let selector: Selector = "canPerformAction:withSender:"
+      let selector = #selector(UIResponder.canPerformAction(_:withSender:))
       let origIMP = class_getMethodImplementation(klass, selector)
       typealias IMPType = @convention(c) (AnyObject, Selector, Selector, AnyObject) -> Bool
       let origIMPC = unsafeBitCast(origIMP, IMPType.self)
@@ -149,33 +147,31 @@ private extension UIMenuController {
         return isMenuItemKitSelector($1) ? true : origIMPC($0, selector, $1, $2)
       }
       
-      let imp = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-      setNewIMP(imp, forSelector: selector, toClass: klass)
+      setNewIMPWithBlock(block, forSelector: selector, toClass: klass)
     }
     
     if true {
       // swizzle methodSignatureForSelector:
-      let selector: Selector = "methodSignatureForSelector:"
+      let selector = NSSelectorFromString("methodSignatureForSelector:")
       let origIMP = class_getMethodImplementation(klass, selector)
       typealias IMPType = @convention(c) (AnyObject, Selector, Selector) -> AnyObject
       let origIMPC = unsafeBitCast(origIMP, IMPType.self)
       let block: @convention(block) (AnyObject, Selector) -> AnyObject = {
         if isMenuItemKitSelector($1) {
           // `NSMethodSignature` is not allowed in Swift, this is a workaround
-          return methodSignatureForSelector("_mik_aDummyClassFuncForFakeSignature:")
+          return NSObject.performSelector(NSSelectorFromString("_mik_fakeSignature")).takeUnretainedValue()
         }
         
         return origIMPC($0, selector, $1)
       }
       
-      let imp = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-      setNewIMP(imp, forSelector: selector, toClass: klass)
+      setNewIMPWithBlock(block, forSelector: selector, toClass: klass)
     }
     
     if true {
       // swizzle forwardInvocation:
       // `NSInvocation` is not allowed in Swift, so we just use AnyObject
-      let selector: Selector = "forwardInvocation:"
+      let selector = NSSelectorFromString("forwardInvocation:")
       let origIMP = class_getMethodImplementation(klass, selector)
       typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> AnyObject
       let origIMPC = unsafeBitCast(origIMP, IMPType.self)
@@ -188,18 +184,11 @@ private extension UIMenuController {
         }
       }
       
-      let imp = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-      setNewIMP(imp, forSelector: selector, toClass: klass)
+      setNewIMPWithBlock(block, forSelector: selector, toClass: klass)
     }
     
     objc_setAssociatedObject(klass, key.utf8Start, true, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
   }
-  
-}
-
-private extension NSObject {
-  
-  @objc class func _mik_aDummyClassFuncForFakeSignature(sender: AnyObject) {}
   
 }
 
@@ -211,7 +200,7 @@ private extension UIResponder {
   
   static var mik_firstResponder: UIResponder? {
     _currentFirstResponder = nil
-    UIApplication.sharedApplication().sendAction("mik_findFirstResponder:", to: nil, from: nil, forEvent: nil)
+    UIApplication.sharedApplication().sendAction(#selector(self.mik_findFirstResponder(_:)), to: nil, from: nil, forEvent: nil)
     return _currentFirstResponder
   }
   

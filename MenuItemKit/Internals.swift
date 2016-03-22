@@ -12,8 +12,9 @@ let block_identifier_prefix = "_menuitemkit_block_"
 
 let image_identifier_prefix = block_identifier_prefix + "image_"
 
-func setNewIMP(imp: IMP, forSelector selector: Selector, toClass klass: AnyClass) {
+func setNewIMPWithBlock<T>(block: T, forSelector selector: Selector, toClass klass: AnyClass) {
   let method = class_getInstanceMethod(klass, selector)
+  let imp = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
   if !class_addMethod(klass, selector, imp, method_getTypeEncoding(method)) {
     method_setImplementation(method, imp)
   }

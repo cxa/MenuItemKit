@@ -15,7 +15,7 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    button.addTarget(self, action: "tapButton:", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(self.tapButton(_:)), forControlEvents: .TouchUpInside)
   }
 
   func tapButton(sender: AnyObject?) {
