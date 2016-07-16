@@ -12,10 +12,10 @@ import XCTest
 class MenuItemKitTests: XCTestCase {
     
   func testConvenienceInit() {
-    let blockItem = UIMenuItem(title: "A", handler: { _ in })
-    XCTAssertTrue(NSStringFromSelector(blockItem.action).hasPrefix(block_identifier_prefix))
-    let imageItem = UIMenuItem(image: UIImage(), handler: { _ in })
-    XCTAssertTrue(NSStringFromSelector(imageItem.action).hasPrefix(image_identifier_prefix))
+    let blockItem = UIMenuItem(title: "A", action: { _ in })
+    XCTAssertTrue(NSStringFromSelector(blockItem.action).hasPrefix(blockIdentifierPrefix))
+    let imageItem = UIMenuItem(title: "A", image: UIImage(), action: { _ in })
+    XCTAssertTrue(NSStringFromSelector(imageItem.action).hasPrefix(blockIdentifierPrefix))
   }
 
 }
