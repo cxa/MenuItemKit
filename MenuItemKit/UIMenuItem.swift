@@ -14,7 +14,7 @@ public extension UIMenuItem {
   @objc(mik_initWithTitle:image:action:)
   convenience init(title: String, image: UIImage?, action: MenuItemAction) {
     let title = image != nil ? title + imageItemIdetifier : title
-    self.init(title: title, action: Selector(blockIdentifierPrefix + NSUUID.stripedString + ":"))
+    self.init(title: title, action: Selector(blockIdentifierPrefix + UUID.stripedString + ":"))
     imageBox.value = image
     actionBox.value = action
   }
@@ -48,7 +48,7 @@ extension UIMenuItem {
   }
 
   @nonobjc
-  func associatedBoxForKey<T>(key: StaticString, @autoclosure initialValue: () -> T) -> Box<T> {
+  func associatedBoxForKey<T>(_ key: StaticString, initialValue: @autoclosure () -> T) -> Box<T> {
     guard let box = objc_getAssociatedObject(self, key.utf8Start) as? Box<T> else {
       let box = Box(initialValue())
       objc_setAssociatedObject(self, key.utf8Start, box as AnyObject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -72,10 +72,10 @@ final class Box<T> {
 }
 
 // MARK: NSUUID
-private extension NSUUID {
+private extension UUID {
   
   static var stripedString: String {
-    return NSUUID().UUIDString.stringByReplacingOccurrencesOfString("-", withString: "_")
+    return UUID().uuidString.replacingOccurrences(of: "-", with: "_")
   }
   
 }

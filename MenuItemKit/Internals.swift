@@ -12,18 +12,18 @@ let imageItemIdetifier = "\u{FEFF}\u{200B}"
 
 let blockIdentifierPrefix = "_menuitemkit_block_"
 
-func setNewIMPWithBlock<T>(block: T, forSelector selector: Selector, toClass klass: AnyClass) {
+func setNewIMPWithBlock<T>(_ block: T, forSelector selector: Selector, toClass klass: AnyClass) {
   let method = class_getInstanceMethod(klass, selector)
-  let imp = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
+  let imp = imp_implementationWithBlock(unsafeBitCast(block, to: AnyObject.self))
   if !class_addMethod(klass, selector, imp, method_getTypeEncoding(method)) {
     method_setImplementation(method, imp)
   }
 }
 
-func isMenuItemKitSelector(str: String) -> Bool {
+func isMenuItemKitSelector(_ str: String) -> Bool {
   return str.hasPrefix(blockIdentifierPrefix)
 }
 
-func isMenuItemKitSelector(sel: Selector) -> Bool {
+func isMenuItemKitSelector(_ sel: Selector) -> Bool {
   return isMenuItemKitSelector(NSStringFromSelector(sel))
 }

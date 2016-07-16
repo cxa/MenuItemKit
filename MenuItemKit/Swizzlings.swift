@@ -10,7 +10,7 @@ import UIKit
 import ObjectiveC.runtime
 
 // This is inspired by https://github.com/steipete/PSMenuItem
-private func swizzleClass(klass: AnyClass) {
+private func swizzle(class klass: AnyClass) {
   objc_sync_enter(klass)
   defer { objc_sync_exit(klass) }
   let key: StaticString = #function
@@ -27,7 +27,7 @@ private func swizzleClass(klass: AnyClass) {
     let selector = #selector(UIResponder.canPerformAction(_:withSender:))
     let origIMP = class_getMethodImplementation(klass, selector)
     typealias IMPType = @convention(c) (AnyObject, Selector, Selector, AnyObject) -> Bool
-    let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+    let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, Selector, AnyObject) -> Bool = {
       return isMenuItemKitSelector($1) ? true : origIMPC($0, selector, $1, $2)
     }
@@ -40,11 +40,11 @@ private func swizzleClass(klass: AnyClass) {
     let selector = NSSelectorFromString("methodSignatureForSelector:")
     let origIMP = class_getMethodImplementation(klass, selector)
     typealias IMPType = @convention(c) (AnyObject, Selector, Selector) -> AnyObject
-    let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+    let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, Selector) -> AnyObject = {
       if isMenuItemKitSelector($1) {
         // `NSMethodSignature` is not allowed in Swift, this is a workaround
-        return NSObject.performSelector(NSSelectorFromString("_mik_fakeSignature")).takeUnretainedValue()
+        return NSObject.perform(NSSelectorFromString("_mik_fakeSignature")).takeUnretainedValue()
       }
 
       return origIMPC($0, selector, $1)
@@ -58,11 +58,11 @@ private func swizzleClass(klass: AnyClass) {
     // `NSInvocation` is not allowed in Swift, so we just use AnyObject
     let selector = NSSelectorFromString("forwardInvocation:")
     let origIMP = class_getMethodImplementation(klass, selector)
-    typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> AnyObject
-    let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+    typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> ()
+    let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, AnyObject) -> () = {
       if isMenuItemKitSelector($1.selector) {
-        guard let item = UIMenuController.sharedMenuController().findMenuItemBySelector($1.selector) else { return }
+        guard let item = UIMenuController.shared().findMenuItemBySelector($1.selector) else { return }
         item.actionBox.value?(item)
       } else {
         origIMPC($0, selector, $1)
@@ -79,13 +79,13 @@ private extension UIMenuController {
 
   @objc class func _mik_load() {
     if true {
-      let selector = Selector("setMenuItems:")
+      let selector = #selector(setter: menuItems)
       let origIMP = class_getMethodImplementation(self, selector)
       typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> ()
-      let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+      let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (AnyObject, AnyObject) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
-          swizzleClass(firstResp.dynamicType)
+          swizzle(class: firstResp.dynamicType)
         }
         
         origIMPC($0, selector, dereplicateImageTitles($1))
@@ -95,15 +95,15 @@ private extension UIMenuController {
     }
     
     if true {
-      let selector = #selector(setTargetRect(_:inView:))
+      let selector = #selector(setTargetRect(_:in:))
       let origIMP = class_getMethodImplementation(self, selector)
       typealias IMPType = @convention(c) (AnyObject, Selector, CGRect, UIView) -> ()
-      let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+      let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (AnyObject, CGRect, UIView) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
-          swizzleClass(firstResp.dynamicType)
+          swizzle(class: firstResp.dynamicType)
         } else {
-          swizzleClass($2.dynamicType)
+          swizzle(class: $2.dynamicType)
           // Must call `becomeFirstResponder` since there's no firstResponder yet
           $2.becomeFirstResponder()
         }
@@ -115,7 +115,7 @@ private extension UIMenuController {
     }
   }
 
-  static func dereplicateImageTitles(itemsObj: AnyObject) -> AnyObject {
+  static func dereplicateImageTitles(_ itemsObj: AnyObject) -> AnyObject {
     guard let items = itemsObj as? [UIMenuItem] else { return itemsObj }
     var dic = [String: [UIMenuItem]]()
     items.filter { $0.title.hasSuffix(imageItemIdetifier) }.forEach { item in
@@ -123,24 +123,24 @@ private extension UIMenuController {
       dic[item.title]?.append(item)
     }
 
-    dic.filter { $1.count > 1 }.flatMap { $1 }.enumerate().forEach { index, item in
-      item.title = (0...index).map { _ in imageItemIdetifier }.joinWithSeparator("")
+    dic.filter { $1.count > 1 }.flatMap { $1 }.enumerated().forEach { index, item in
+      item.title = (0...index).map { _ in imageItemIdetifier }.joined(separator: "")
     }
 
     return items
   }
 
-  func findImageItemByTitle(title: String?) -> UIMenuItem? {
+  func findImageItemByTitle(_ title: String?) -> UIMenuItem? {
     guard title?.hasSuffix(imageItemIdetifier) == true else { return nil }
     return menuItems?.lazy.filter { $0.title == title }.first
   }
 
-  func findMenuItemBySelector(selector: Selector?) -> UIMenuItem? {
+  func findMenuItemBySelector(_ selector: Selector?) -> UIMenuItem? {
     guard let selector = selector else { return nil }
     return menuItems?.lazy.filter { sel_isEqual($0.action, selector) }.first
   }
 
-  func findMenuItemBySelector(selector: String?) -> UIMenuItem? {
+  func findMenuItemBySelector(_ selector: String?) -> UIMenuItem? {
     guard let selStr = selector else { return nil }
     return findMenuItemBySelector(NSSelectorFromString(selStr))
   }
@@ -151,13 +151,13 @@ private extension UILabel {
 
   @objc class func _mik_load() {
     if true {
-      let selector = #selector(drawTextInRect(_:))
+      let selector = #selector(drawText(in:))
       let origIMP = class_getMethodImplementation(self, selector)
       typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> ()
-      let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+      let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (UILabel, CGRect) -> () = { label, rect in
         guard
-          let item = UIMenuController.sharedMenuController().findImageItemByTitle(label.text),
+          let item = UIMenuController.shared().findImageItemByTitle(label.text),
           let image = item.imageBox.value
         else {
           return origIMPC(label, selector, rect)
@@ -168,19 +168,19 @@ private extension UILabel {
           x: (rect.width  - image.size.width)  / 2,
           y: (rect.height - image.size.height) / 2
         )
-        image.drawAtPoint(point)
+        image.draw(at: point)
       }
 
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
     }
 
     if true {
-      let selector = NSSelectorFromString("setFrame:")
+      let selector = #selector(setter: frame)
       let origIMP = class_getMethodImplementation(self, selector)
       typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> ()
-      let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+      let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (UILabel, CGRect) -> () = { label, rect in
-        let isImageItem = UIMenuController.sharedMenuController().findImageItemByTitle(label.text)?.imageBox.value != nil
+        let isImageItem = UIMenuController.shared().findImageItemByTitle(label.text)?.imageBox.value != nil
         let rect = isImageItem ? label.superview?.bounds ?? rect : rect
         origIMPC(label, selector, rect)
       }
@@ -194,13 +194,13 @@ private extension UILabel {
 private extension NSString {
   
   @objc class func _mik_load() {
-    let selector = #selector(sizeWithAttributes(_:))
+    let selector = #selector(size(attributes:))
     let origIMP = class_getMethodImplementation(self, selector)
     typealias IMPType = @convention(c) (NSString, Selector, AnyObject) -> CGSize
-    let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+    let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (NSString, AnyObject) -> CGSize = { str, attr in
       guard
-        let item = UIMenuController.sharedMenuController().findImageItemByTitle(str as String),
+        let item = UIMenuController.shared().findImageItemByTitle(str as String),
         let image = item.imageBox.value
       else {
         return origIMPC(str, selector, attr)
@@ -222,11 +222,11 @@ private extension UIResponder {
   
   static var mik_firstResponder: UIResponder? {
     _currentFirstResponder = nil
-    UIApplication.sharedApplication().sendAction(#selector(mik_findFirstResponder(_:)), to: nil, from: nil, forEvent: nil)
+    UIApplication.shared().sendAction(#selector(mik_findFirstResponder(_:)), to: nil, from: nil, for: nil)
     return _currentFirstResponder
   }
   
-  @objc func mik_findFirstResponder(sender: AnyObject) {
+  @objc func mik_findFirstResponder(_ sender: AnyObject) {
     _currentFirstResponder = self
   }
   

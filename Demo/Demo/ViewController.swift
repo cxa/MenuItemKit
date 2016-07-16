@@ -15,11 +15,11 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    button.addTarget(self, action: #selector(self.tapButton(_:)), forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(self.tapButton(_:)), for: .touchUpInside)
   }
 
-  func tapButton(sender: AnyObject?) {
-    let controller = UIMenuController.sharedMenuController()
+  func tapButton(_ sender: AnyObject?) {
+    let controller = UIMenuController.shared()
     let textItem = UIMenuItem(title: "Text") { [weak self] _ in
       self?.showAlertWithTitle("text item tapped")
     }
@@ -44,14 +44,14 @@ class ViewController: UIViewController {
     }
     
     controller.menuItems = [textItem, imageItem, colorImageItem, nextItem]
-    controller.setTargetRect(button.bounds, inView: button)
+    controller.setTargetRect(button.bounds, in: button)
     controller.setMenuVisible(true, animated: true)
   }
 
-  func showAlertWithTitle(title: String) {
-    let alertVC = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
-    alertVC.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: { _ in }))
-    presentViewController(alertVC, animated: true, completion: nil)
+  func showAlertWithTitle(_ title: String) {
+    let alertVC = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+    alertVC.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { _ in }))
+    present(alertVC, animated: true, completion: nil)
   }
 
 }
