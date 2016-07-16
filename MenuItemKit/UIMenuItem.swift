@@ -10,34 +10,45 @@ import UIKit
 import ObjectiveC.runtime
 
 public extension UIMenuItem {
-  
-  convenience init(title: String, handler: MenuItemHandler) {
-    self.init(title: title, action: Selector(block_identifier_prefix + NSUUID.stripedString + ":"))
-    handlerBox.value = handler
-  }
-  
-  convenience init(image: UIImage, handler: MenuItemHandler) {
-    let selector = image_identifier_prefix + NSUUID.stripedString + ":"
-    self.init(title: selector, action: Selector(selector))
+
+  @objc(mik_initWithTitle:image:action:)
+  convenience init(title: String, image: UIImage?, action: MenuItemAction) {
+    let title = image != nil ? title + imageItemIdetifier : title
+    self.init(title: title, action: Selector(blockIdentifierPrefix + NSUUID.stripedString + ":"))
     imageBox.value = image
-    handlerBox.value = handler
+    actionBox.value = action
   }
-  
+
+  @objc(mik_initWithTitle:action:)
+  convenience init(title: String, action: MenuItemAction) {
+    self.init(title: title, image: nil, action: action)
+  }
+
+//  convenience init(image: UIImage, handler: MenuItemHandler) {
+//    let selector = image_identifier_prefix + NSUUID.stripedString + ":"
+//    self.init(title: selector, action: Selector(selector))
+//    imageBox.value = image
+//    handlerBox.value = handler
+//  }
+
 }
 
 extension UIMenuItem {
-  
+
+  @nonobjc
   var imageBox: Box<UIImage?> {
     let key: StaticString = #function
-    return associatedBoxForKey(key, initialValue: { nil })
+    return associatedBoxForKey(key, initialValue: nil)
   }
-  
-  var handlerBox: Box<MenuItemHandler?> {
+
+  @nonobjc
+  var actionBox: Box<MenuItemAction?> {
     let key: StaticString = #function
-    return associatedBoxForKey(key, initialValue: { nil })
+    return associatedBoxForKey(key, initialValue: nil)
   }
-  
-  func associatedBoxForKey<T>(key: StaticString, initialValue: () -> T) -> Box<T> {
+
+  @nonobjc
+  func associatedBoxForKey<T>(key: StaticString, @autoclosure initialValue: () -> T) -> Box<T> {
     guard let box = objc_getAssociatedObject(self, key.utf8Start) as? Box<T> else {
       let box = Box(initialValue())
       objc_setAssociatedObject(self, key.utf8Start, box as AnyObject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)

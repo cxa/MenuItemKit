@@ -8,9 +8,9 @@
 
 import ObjectiveC.runtime
 
-let block_identifier_prefix = "_menuitemkit_block_"
+let imageItemIdetifier = "\u{FEFF}\u{200B}"
 
-let image_identifier_prefix = block_identifier_prefix + "image_"
+let blockIdentifierPrefix = "_menuitemkit_block_"
 
 func setNewIMPWithBlock<T>(block: T, forSelector selector: Selector, toClass klass: AnyClass) {
   let method = class_getInstanceMethod(klass, selector)
@@ -21,7 +21,7 @@ func setNewIMPWithBlock<T>(block: T, forSelector selector: Selector, toClass kla
 }
 
 func isMenuItemKitSelector(str: String) -> Bool {
-  return str.hasPrefix(block_identifier_prefix)
+  return str.hasPrefix(blockIdentifierPrefix)
 }
 
 func isMenuItemKitSelector(sel: Selector) -> Bool {
