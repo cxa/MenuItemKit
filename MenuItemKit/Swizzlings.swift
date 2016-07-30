@@ -88,7 +88,7 @@ private extension UIMenuController {
           swizzleClass(firstResp.dynamicType)
         }
         
-        origIMPC($0, selector, dereplicateImageTitles($1))
+        origIMPC($0, selector, makeUniqueImageTitles($1))
       }
       
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
@@ -115,7 +115,7 @@ private extension UIMenuController {
     }
   }
 
-  static func dereplicateImageTitles(itemsObj: AnyObject) -> AnyObject {
+  static func makeUniqueImageTitles(itemsObj: AnyObject) -> AnyObject {
     guard let items = itemsObj as? [UIMenuItem] else { return itemsObj }
     var dic = [String: [UIMenuItem]]()
     items.filter { $0.title.hasSuffix(imageItemIdetifier) }.forEach { item in
