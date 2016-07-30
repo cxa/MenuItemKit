@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MenuItemKit"
-  s.version      = "1.1"
+  s.version      = "1.1.1"
   s.summary      = "MenuItemKit provides image and closure(block) support for UIMenuItem."
   s.author       = "CHEN Xian’an <xianan.chen@gmail.com>"
   s.homepage     = "https://github.com/cxa/MenuItemKit"
