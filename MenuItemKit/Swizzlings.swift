@@ -17,7 +17,7 @@ private func swizzle(class klass: AnyClass) {
   guard objc_getAssociatedObject(klass, key.utf8Start) == nil else { return }
   if true {
     // swizzle canBecomeFirstResponder
-    let selector = #selector(UIResponder.canBecomeFirstResponder)
+    let selector = #selector(getter: UIResponder.canBecomeFirstResponder)
     let block: @convention(block) (AnyObject) -> Bool = { _ in true }
     setNewIMPWithBlock(block, forSelector: selector, toClass: klass)
   }
@@ -62,7 +62,7 @@ private func swizzle(class klass: AnyClass) {
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, AnyObject) -> () = {
       if isMenuItemKitSelector($1.selector) {
-        guard let item = UIMenuController.shared().findMenuItemBySelector($1.selector) else { return }
+        guard let item = UIMenuController.shared.findMenuItemBySelector($1.selector) else { return }
         item.actionBox.value?(item)
       } else {
         origIMPC($0, selector, $1)
@@ -88,7 +88,7 @@ private extension UIMenuController {
           swizzle(class: firstResp.dynamicType)
         }
         
-        origIMPC($0, selector, dereplicateImageTitles($1))
+        origIMPC($0, selector, makeUniqueImageTitles($1))
       }
       
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
@@ -115,7 +115,7 @@ private extension UIMenuController {
     }
   }
 
-  static func dereplicateImageTitles(_ itemsObj: AnyObject) -> AnyObject {
+  static func makeUniqueImageTitles(_ itemsObj: AnyObject) -> AnyObject {
     guard let items = itemsObj as? [UIMenuItem] else { return itemsObj }
     var dic = [String: [UIMenuItem]]()
     items.filter { $0.title.hasSuffix(imageItemIdetifier) }.forEach { item in
@@ -157,18 +157,22 @@ private extension UILabel {
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (UILabel, CGRect) -> () = { label, rect in
         guard
-          let item = UIMenuController.shared().findImageItemByTitle(label.text),
+          let item = UIMenuController.shared.findImageItemByTitle(label.text),
           let image = item.imageBox.value
         else {
           return origIMPC(label, selector, rect)
         }
 
-
+        // See: https://github.com/cxa/MenuItemKit/issues/9
         let point = CGPoint(
           x: (rect.width  - image.size.width)  / 2,
-          y: (rect.height - image.size.height) / 2
-        )
-        image.draw(at: point)
+          y: (rect.height - image.size.height) / 2)
+        if let btn = label.value(forKey: "_button") as? UIButton {
+          btn.setImage(image, for: .normal)
+          btn.imageView?.frame.origin = point
+        } else {
+          image.draw(at: point)
+        }
       }
 
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
@@ -180,7 +184,7 @@ private extension UILabel {
       typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> ()
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (UILabel, CGRect) -> () = { label, rect in
-        let isImageItem = UIMenuController.shared().findImageItemByTitle(label.text)?.imageBox.value != nil
+        let isImageItem = UIMenuController.shared.findImageItemByTitle(label.text)?.imageBox.value != nil
         let rect = isImageItem ? label.superview?.bounds ?? rect : rect
         origIMPC(label, selector, rect)
       }
@@ -200,7 +204,7 @@ private extension NSString {
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (NSString, AnyObject) -> CGSize = { str, attr in
       guard
-        let item = UIMenuController.shared().findImageItemByTitle(str as String),
+        let item = UIMenuController.shared.findImageItemByTitle(str as String),
         let image = item.imageBox.value
       else {
         return origIMPC(str, selector, attr)
@@ -222,7 +226,7 @@ private extension UIResponder {
   
   static var mik_firstResponder: UIResponder? {
     _currentFirstResponder = nil
-    UIApplication.shared().sendAction(#selector(mik_findFirstResponder(_:)), to: nil, from: nil, for: nil)
+    UIApplication.shared.sendAction(#selector(mik_findFirstResponder(_:)), to: nil, from: nil, for: nil)
     return _currentFirstResponder
   }
   

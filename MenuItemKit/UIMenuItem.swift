@@ -23,14 +23,7 @@ public extension UIMenuItem {
   convenience init(title: String, action: MenuItemAction) {
     self.init(title: title, image: nil, action: action)
   }
-
-//  convenience init(image: UIImage, handler: MenuItemHandler) {
-//    let selector = image_identifier_prefix + NSUUID.stripedString + ":"
-//    self.init(title: selector, action: Selector(selector))
-//    imageBox.value = image
-//    handlerBox.value = handler
-//  }
-
+  
 }
 
 extension UIMenuItem {

@@ -19,7 +19,7 @@ class ViewController: UIViewController {
   }
 
   func tapButton(_ sender: AnyObject?) {
-    let controller = UIMenuController.shared()
+    let controller = UIMenuController.shared
     let textItem = UIMenuItem(title: "Text") { [weak self] _ in
       self?.showAlertWithTitle("text item tapped")
     }
