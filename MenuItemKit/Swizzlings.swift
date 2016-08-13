@@ -163,12 +163,16 @@ private extension UILabel {
           return origIMPC(label, selector, rect)
         }
 
-
+        // Workaround for #9: https://github.com/cxa/MenuItemKit/issues/9
         let point = CGPoint(
           x: (rect.width  - image.size.width)  / 2,
-          y: (rect.height - image.size.height) / 2
-        )
-        image.drawAtPoint(point)
+          y: (rect.height - image.size.height) / 2)
+        if let btn = label.valueForKey("_button") as? UIButton {
+          btn.setImage(image, forState: .Normal)
+          btn.imageView?.frame.origin = point
+        } else {
+          image.drawAtPoint(point)
+        }
       }
 
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
