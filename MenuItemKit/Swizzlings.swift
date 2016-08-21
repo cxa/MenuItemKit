@@ -85,7 +85,7 @@ private extension UIMenuController {
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (AnyObject, AnyObject) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
-          swizzle(class: firstResp.dynamicType)
+          swizzle(class: type(of: firstResp))
         }
         
         origIMPC($0, selector, makeUniqueImageTitles($1))
@@ -101,9 +101,9 @@ private extension UIMenuController {
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (AnyObject, CGRect, UIView) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
-          swizzle(class: firstResp.dynamicType)
+          swizzle(class: type(of: firstResp))
         } else {
-          swizzle(class: $2.dynamicType)
+          swizzle(class: type(of: $2))
           // Must call `becomeFirstResponder` since there's no firstResponder yet
           $2.becomeFirstResponder()
         }
@@ -127,7 +127,7 @@ private extension UIMenuController {
       item.title = (0...index).map { _ in imageItemIdetifier }.joined(separator: "")
     }
 
-    return items
+    return items as AnyObject
   }
 
   func findImageItemByTitle(_ title: String?) -> UIMenuItem? {
