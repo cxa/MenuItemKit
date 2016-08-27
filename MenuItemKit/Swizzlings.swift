@@ -158,21 +158,36 @@ private extension UILabel {
       let block: @convention(block) (UILabel, CGRect) -> () = { label, rect in
         guard
           let item = UIMenuController.sharedMenuController().findImageItemByTitle(label.text),
+          let _ = item.imageBox.value
+        else { return origIMPC(label, selector, rect) }
+      }
+
+      setNewIMPWithBlock(block, forSelector: selector, toClass: self)
+    }
+
+    if true {
+      let selector = #selector(layoutSubviews)
+      let origIMP = class_getMethodImplementation(self, selector)
+      typealias IMPType = @convention(c) (UILabel, Selector) -> ()
+      let origIMPC = unsafeBitCast(origIMP, IMPType.self)
+      let block: @convention(block) (UILabel) -> () = { label in
+        guard
+          let item = UIMenuController.sharedMenuController().findImageItemByTitle(label.text),
           let image = item.imageBox.value
-        else {
-          return origIMPC(label, selector, rect)
-        }
+        else { return origIMPC(label, selector) }
 
         // Workaround for #9: https://github.com/cxa/MenuItemKit/issues/9
         let point = CGPoint(
-          x: (rect.width  - image.size.width)  / 2,
-          y: (rect.height - image.size.height) / 2)
-        if let btn = label.valueForKey("_button") as? UIButton {
-          btn.setImage(image, forState: .Normal)
-          btn.imageView?.frame.origin = point
-        } else {
-          image.drawAtPoint(point)
+          x: (label.bounds.width  - image.size.width)  / 2,
+          y: (label.bounds.height - image.size.height) / 2)
+        let imageView: Box<UIImageView> = label.associatedBoxForKey(#function) { [weak label] in
+          let imgView = UIImageView(frame: .zero)
+          label?.addSubview(imgView)
+          return imgView
         }
+
+        imageView.value.image = image
+        imageView.value.frame = CGRect(origin: point, size: image.size)
       }
 
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
