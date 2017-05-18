@@ -23,7 +23,12 @@ public extension UIMenuItem {
   convenience init(title: String, action: @escaping MenuItemAction) {
     self.init(title: title, image: nil, action: action)
   }
-  
+
+
+  @objc(mik_isMenuItemKitSelector:)
+  static func isMenuItemKitSelector(_ sel: Selector) -> Bool {
+    return NSStringFromSelector(sel).hasPrefix(blockIdentifierPrefix)
+  }
 }
 
 // MARK: NSUUID

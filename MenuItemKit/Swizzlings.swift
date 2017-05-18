@@ -29,7 +29,7 @@ private func swizzle(class klass: AnyClass) {
     typealias IMPType = @convention(c) (AnyObject, Selector, Selector, AnyObject) -> Bool
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, Selector, AnyObject) -> Bool = {
-      return isMenuItemKitSelector($1) ? true : origIMPC($0, selector, $1, $2)
+      return UIMenuItem.isMenuItemKitSelector($1) ? true : origIMPC($0, selector, $1, $2)
     }
 
     setNewIMPWithBlock(block, forSelector: selector, toClass: klass)
@@ -42,7 +42,7 @@ private func swizzle(class klass: AnyClass) {
     typealias IMPType = @convention(c) (AnyObject, Selector, Selector) -> AnyObject
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, Selector) -> AnyObject = {
-      if isMenuItemKitSelector($1) {
+      if UIMenuItem.isMenuItemKitSelector($1) {
         // `NSMethodSignature` is not allowed in Swift, this is a workaround
         return NSObject.perform(NSSelectorFromString("_mik_fakeSignature")).takeUnretainedValue()
       }
@@ -61,7 +61,7 @@ private func swizzle(class klass: AnyClass) {
     typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> ()
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, AnyObject) -> () = {
-      if isMenuItemKitSelector($1.selector) {
+      if UIMenuItem.isMenuItemKitSelector($1.selector) {
         guard let item = UIMenuController.shared.findMenuItemBySelector($1.selector) else { return }
         item.actionBox.value?(item)
       } else {

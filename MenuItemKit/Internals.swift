@@ -20,14 +20,6 @@ func setNewIMPWithBlock<T>(_ block: T, forSelector selector: Selector, toClass k
   }
 }
 
-func isMenuItemKitSelector(_ str: String) -> Bool {
-  return str.hasPrefix(blockIdentifierPrefix)
-}
-
-func isMenuItemKitSelector(_ sel: Selector) -> Bool {
-  return isMenuItemKitSelector(NSStringFromSelector(sel))
-}
-
 extension NSObject {
 
   @nonobjc
