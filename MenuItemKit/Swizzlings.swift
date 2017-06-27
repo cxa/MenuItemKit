@@ -87,13 +87,13 @@ private extension UIMenuController {
         if let firstResp = UIResponder.mik_firstResponder {
           swizzle(class: type(of: firstResp))
         }
-        
+
         origIMPC($0, selector, makeUniqueImageTitles($1))
       }
-      
+
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
     }
-    
+
     if true {
       let selector = #selector(setTargetRect(_:in:))
       let origIMP = class_getMethodImplementation(self, selector)
@@ -107,10 +107,10 @@ private extension UIMenuController {
           // Must call `becomeFirstResponder` since there's no firstResponder yet
           $2.becomeFirstResponder()
         }
-        
+
         origIMPC($0, selector, $1, $2)
       }
-      
+
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
     }
   }
@@ -207,11 +207,11 @@ private extension UILabel {
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
     }
   }
-  
+
 }
 
 private extension NSString {
-  
+
   @objc class func _mik_load() {
     let selector = #selector(size(attributes:))
     let origIMP = class_getMethodImplementation(self, selector)
@@ -227,26 +227,26 @@ private extension NSString {
 
       return image.size
     }
-    
+
     setNewIMPWithBlock(block, forSelector: selector, toClass: self)
   }
-  
+
 }
 
 // MARK: Helper to find first responder
 // Source: http://stackoverflow.com/a/14135456/395213
-private var _currentFirstResponder: UIResponder? = nil
+private weak var _currentFirstResponder: UIResponder? = nil
 
 private extension UIResponder {
-  
+
   static var mik_firstResponder: UIResponder? {
     _currentFirstResponder = nil
     UIApplication.shared.sendAction(#selector(mik_findFirstResponder(_:)), to: nil, from: nil, for: nil)
     return _currentFirstResponder
   }
-  
+
   @objc func mik_findFirstResponder(_ sender: AnyObject) {
     _currentFirstResponder = self
   }
-  
+
 }
