@@ -15,26 +15,23 @@ let blockIdentifierPrefix = "_menuitemkit_block_"
 func setNewIMPWithBlock<T>(_ block: T, forSelector selector: Selector, toClass klass: AnyClass) {
   let method = class_getInstanceMethod(klass, selector)
   let imp = imp_implementationWithBlock(unsafeBitCast(block, to: AnyObject.self))
-  if !class_addMethod(klass, selector, imp, method_getTypeEncoding(method)) {
-    method_setImplementation(method, imp)
+  if !class_addMethod(klass, selector, imp, method_getTypeEncoding(method!)) {
+    method_setImplementation(method!, imp)
   }
 }
 
-extension NSObject {
+@nonobjc extension NSObject {
 
-  @nonobjc
   var imageBox: Box<UIImage?> {
     let key: StaticString = #function
     return associatedBoxForKey(key, initialValue: nil)
   }
 
-  @nonobjc
   var actionBox: Box<MenuItemAction?> {
     let key: StaticString = #function
     return associatedBoxForKey(key, initialValue: nil)
   }
 
-  @nonobjc
   func associatedBoxForKey<T>(_ key: StaticString, initialValue: @autoclosure () -> T) -> Box<T> {
     guard let box = objc_getAssociatedObject(self, key.utf8Start) as? Box<T> else {
       let box = Box(initialValue())

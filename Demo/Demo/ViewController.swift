@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     button.addTarget(self, action: #selector(self.tapButton(_:)), for: .touchUpInside)
   }
 
-  func tapButton(_ sender: AnyObject?) {
+  @objc func tapButton(_ sender: AnyObject?) {
     let controller = UIMenuController.shared
     let textItem = UIMenuItem(title: "Text") { [weak self] _ in
       self?.showAlertWithTitle("text item tapped")

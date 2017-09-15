@@ -213,7 +213,7 @@ private extension UILabel {
 private extension NSString {
 
   @objc class func _mik_load() {
-    let selector = #selector(size(attributes:))
+    let selector = #selector(size)
     let origIMP = class_getMethodImplementation(self, selector)
     typealias IMPType = @convention(c) (NSString, Selector, AnyObject) -> CGSize
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
