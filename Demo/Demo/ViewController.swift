@@ -10,7 +10,6 @@ import UIKit
 import MenuItemKit
 
 class ViewController: UIViewController {
-
   @IBOutlet var button: UIButton!
   
   override func viewDidLoad() {
@@ -53,5 +52,4 @@ class ViewController: UIViewController {
     alertVC.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { _ in }))
     present(alertVC, animated: true, completion: nil)
   }
-
 }

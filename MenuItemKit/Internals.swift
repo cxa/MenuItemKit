@@ -21,7 +21,6 @@ func setNewIMPWithBlock<T>(_ block: T, forSelector selector: Selector, toClass k
 }
 
 @nonobjc extension NSObject {
-
   var imageBox: Box<UIImage?> {
     let key: StaticString = #function
     return associatedBoxForKey(key, initialValue: nil)
@@ -41,16 +40,13 @@ func setNewIMPWithBlock<T>(_ block: T, forSelector selector: Selector, toClass k
 
     return box
   }
-
 }
 
 // MARK: Box wrapper
 final class Box<T> {
-
   var value: T
 
   init(_ val: T) {
     value = val
   }
-  
 }

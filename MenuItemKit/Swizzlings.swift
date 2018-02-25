@@ -10,7 +10,7 @@ import UIKit
 import ObjectiveC.runtime
 
 // This is inspired by https://github.com/steipete/PSMenuItem
-internal func swizzle(class klass: AnyClass) {
+private func swizzle(class klass: AnyClass) {
   objc_sync_enter(klass)
   defer { objc_sync_exit(klass) }
   let key: StaticString = #function
@@ -76,7 +76,6 @@ internal func swizzle(class klass: AnyClass) {
 }
 
 private extension UIMenuController {
-
   @objc class func _mik_load() {
     if true {
       let selector = #selector(setter: menuItems)
@@ -149,11 +148,9 @@ private extension UIMenuController {
     guard let selStr = selector else { return nil }
     return findMenuItemBySelector(NSSelectorFromString(selStr))
   }
-
 }
 
 private extension UILabel {
-
   @objc class func _mik_load() {
     if true {
       let selector = #selector(drawText(in:))
@@ -212,11 +209,9 @@ private extension UILabel {
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
     }
   }
-
 }
 
 private extension NSString {
-
   @objc class func _mik_load() {
     let selector = #selector(size)
     let origIMP = class_getMethodImplementation(self, selector)
@@ -235,7 +230,6 @@ private extension NSString {
 
     setNewIMPWithBlock(block, forSelector: selector, toClass: self)
   }
-
 }
 
 // MARK: Helper to find first responder
@@ -243,7 +237,6 @@ private extension NSString {
 private weak var _currentFirstResponder: UIResponder? = nil
 
 private extension UIResponder {
-
   static var mik_firstResponder: UIResponder? {
     _currentFirstResponder = nil
     UIApplication.shared.sendAction(#selector(mik_findFirstResponder(_:)), to: nil, from: nil, for: nil)
@@ -267,5 +260,4 @@ private extension UIResponder {
     if let vc = mik_viewControllerInChain { return vc }
     return self
   }
-
 }
