@@ -10,7 +10,7 @@ import UIKit
 import ObjectiveC.runtime
 
 // This is inspired by https://github.com/steipete/PSMenuItem
-private func swizzle(class klass: AnyClass) {
+internal func swizzle(class klass: AnyClass) {
   objc_sync_enter(klass)
   defer { objc_sync_exit(klass) }
   let key: StaticString = #function
