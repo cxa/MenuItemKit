@@ -9,8 +9,8 @@
 import UIKit
 
 public extension UIMenuController {
-  @objc(mik_installToViewController:)
-  static func installToViewController(_ viewController: UIViewController) {
-    swizzle(class: type(of: viewController))
+  @objc(mik_installToResponder:shouldShowForAction:)
+  static func installTo(responder: UIResponder, shouldShowForAction: @escaping (_ action: Selector, _ default: Bool) -> Bool = { $1 }) {
+    swizzle(class: type(of: responder), shouldShowForAction: shouldShowForAction)
   }
 }

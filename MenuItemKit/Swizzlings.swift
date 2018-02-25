@@ -10,7 +10,7 @@ import UIKit
 import ObjectiveC.runtime
 
 // This is inspired by https://github.com/steipete/PSMenuItem
-internal func swizzle(class klass: AnyClass) {
+internal func swizzle(class klass: AnyClass, shouldShowForAction: @escaping (_ action: Selector, _ default: Bool) -> Bool = { $1 }) {
   objc_sync_enter(klass)
   defer { objc_sync_exit(klass) }
   let key: StaticString = #function
@@ -29,7 +29,8 @@ internal func swizzle(class klass: AnyClass) {
     typealias IMPType = @convention(c) (AnyObject, Selector, Selector, AnyObject) -> Bool
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, Selector, AnyObject) -> Bool = {
-      return UIMenuItem.isMenuItemKitSelector($1) ? true : origIMPC($0, selector, $1, $2)
+      let `default` = UIMenuItem.isMenuItemKitSelector($1) ? true : origIMPC($0, selector, $1, $2)
+      return shouldShowForAction($1, `default`)
     }
 
     setNewIMPWithBlock(block, forSelector: selector, toClass: klass)
