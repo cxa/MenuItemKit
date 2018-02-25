@@ -10,7 +10,7 @@ import UIKit
 import ObjectiveC.runtime
 
 // This is inspired by https://github.com/steipete/PSMenuItem
-private func swizzle(class klass: AnyClass) {
+internal func swizzle(class klass: AnyClass) {
   objc_sync_enter(klass)
   defer { objc_sync_exit(klass) }
   let key: StaticString = #function
@@ -85,7 +85,7 @@ private extension UIMenuController {
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (AnyObject, AnyObject) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
-          swizzle(class: type(of: firstResp))
+          swizzle(class: type(of: firstResp.mik_responderToSwizzle))
         }
 
         origIMPC($0, selector, makeUniqueImageTitles($1))
@@ -101,11 +101,16 @@ private extension UIMenuController {
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (AnyObject, CGRect, UIView) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
-          swizzle(class: type(of: firstResp))
+          swizzle(class: type(of: firstResp.mik_responderToSwizzle))
         } else {
-          swizzle(class: type(of: $2))
           // Must call `becomeFirstResponder` since there's no firstResponder yet
-          $2.becomeFirstResponder()
+          if let n = $2.mik_viewControllerInChain {
+            swizzle(class: type(of: n))
+            n.becomeFirstResponder()
+          } else {
+            swizzle(class: type(of: $2))
+            $2.becomeFirstResponder()
+          }
         }
 
         origIMPC($0, selector, $1, $2)
@@ -247,6 +252,20 @@ private extension UIResponder {
 
   @objc func mik_findFirstResponder(_ sender: AnyObject) {
     _currentFirstResponder = self
+  }
+
+  var mik_viewControllerInChain: UIResponder? {
+    var nextR = Optional(self)
+    while nextR != nil && nextR?.isKind(of: UIViewController.self) != true {
+      nextR = nextR?.next
+    }
+
+    return nextR?.isKind(of: UIViewController.self) == true ? nextR : nil
+  }
+
+  var mik_responderToSwizzle: UIResponder {
+    if let vc = mik_viewControllerInChain { return vc }
+    return self
   }
 
 }
