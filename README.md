@@ -37,6 +37,10 @@ Just init `UIMenuItem`s with above APIs, and set them to `menuItems` of `UIMenuI
 
 Check dome projects (both Swift and Objective-C are provided) for more details.
 
+## Advance Usage
+
+For menu items out of your control, you can use `static func installTo(responder: UIResponder, shouldShowForAction: @escaping (Selector, Bool) -> Bool = default)` to configure items visibility. Check [AutoPopupMenuContorllerDemo](AutoPopupMenuContorllerDemo).
+
 ## About Me
 
 * Twitter: [@_cxa](https://twitter.com/_cxa)
