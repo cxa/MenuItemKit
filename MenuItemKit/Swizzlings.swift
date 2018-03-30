@@ -81,14 +81,14 @@ private extension UIMenuController {
     if true {
       let selector = #selector(setter: menuItems)
       let origIMP = class_getMethodImplementation(self, selector)
-      typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> ()
+      typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject?) -> ()
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
-      let block: @convention(block) (AnyObject, AnyObject) -> () = {
+      let block: @convention(block) (AnyObject, AnyObject?) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
           swizzle(class: type(of: firstResp.mik_responderToSwizzle))
         }
 
-        origIMPC($0, selector, makeUniqueImageTitles($1))
+        origIMPC($0, selector, $1.flatMap(makeUniqueImageTitles))
       }
 
       setNewIMPWithBlock(block, forSelector: selector, toClass: self)
