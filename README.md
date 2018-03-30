@@ -4,6 +4,8 @@
 
 `MenuItemKit` is a Swift project but Objective-C is supported without any doubt.
 
+![Screenshot](Screenshot.png)
+
 
 ## How to use
 
