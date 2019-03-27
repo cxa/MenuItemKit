@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  AutoPopupMenuContorllerDemo
+//  AutoPopupMenuControllerDemo
 //
 //  Created by CHEN Xian-an on 25/02/2018.
 //  Copyright © 2018 Neo Xian-an CHEN. All rights reserved.
