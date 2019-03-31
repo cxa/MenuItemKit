@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     }
 
     let colorImage = UIImage(named: "ColorImage")
-    let colorImageItem = UIMenuItem(title: "Image", image: colorImage) { [weak self] _ in
+    let colorImageItem = UIMenuItem(title: "ColorImage", image: colorImage) { [weak self] _ in
       self?.showAlertWithTitle("color image item tapped")
     }
 

@@ -137,12 +137,12 @@ private extension UIMenuController {
 
   func findImageItemByTitle(_ title: String?) -> UIMenuItem? {
     guard title?.hasSuffix(imageItemIdetifier) == true else { return nil }
-    return menuItems?.lazy.filter { $0.title == title }.first
+    return menuItems?.first { $0.title == title }
   }
 
   func findMenuItemBySelector(_ selector: Selector?) -> UIMenuItem? {
     guard let selector = selector else { return nil }
-    return menuItems?.lazy.filter { sel_isEqual($0.action, selector) }.first
+    return menuItems?.first { sel_isEqual($0.action, selector) }
   }
 
   func findMenuItemBySelector(_ selector: String?) -> UIMenuItem? {
