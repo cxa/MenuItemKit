@@ -41,7 +41,7 @@ Check dome projects (both Swift and Objective-C are provided) for more details.
 
 ## Advance Usage
 
-For menu items being out of your control, you can use `static func installTo(responder: UIResponder, shouldShowForAction: @escaping (Selector, Bool) -> Bool = default)` to configure items visibility. Check [AutoPopupMenuContorllerDemo](AutoPopupMenuContorllerDemo).
+For menu items out of your control, you can use `static func installTo(responder: UIResponder, shouldShowForAction: @escaping (Selector, Bool) -> Bool = default)` to configure items visibility. Check [AutoPopupMenuControllerDemo](AutoPopupMenuControllerDemo).
 
 ## About Me
 
