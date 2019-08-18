@@ -10,7 +10,11 @@ import UIKit
 import ObjectiveC.runtime
 
 // This is inspired by https://github.com/steipete/PSMenuItem
-internal func swizzle(class klass: AnyClass, shouldShowForAction: @escaping (_ action: Selector, _ default: Bool) -> Bool = { $1 }) {
+internal func swizzle(_ object: Any, shouldShowForAction: @escaping ActionFilter = { $1 }) {
+  let cls: AnyClass? = object_getClass(object);
+  let isClass = class_isMetaClass(cls);
+  let klass: AnyClass = isClass ? object as! AnyClass : cls!;
+  if !isClass, let nsobj = object as? NSObject { nsobj.actionFilterBox.value = shouldShowForAction }
   objc_sync_enter(klass)
   defer { objc_sync_exit(klass) }
   let key: StaticString = #function
@@ -30,7 +34,8 @@ internal func swizzle(class klass: AnyClass, shouldShowForAction: @escaping (_ a
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
     let block: @convention(block) (AnyObject, Selector, AnyObject) -> Bool = {
       let `default` = UIMenuItem.isMenuItemKitSelector($1) ? true : origIMPC($0, selector, $1, $2)
-      return shouldShowForAction($1, `default`)
+      if let shouldShow = ($0 as? NSObject)?.actionFilterBox.value { return shouldShow($1, `default`) }
+      return `default`
     }
 
     setNewIMPWithBlock(block, forSelector: selector, toClass: klass)
@@ -85,7 +90,7 @@ private extension UIMenuController {
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (AnyObject, AnyObject?) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
-          swizzle(class: type(of: firstResp.mik_responderToSwizzle))
+          swizzle(type(of: firstResp.mik_responderToSwizzle))
         }
 
         origIMPC($0, selector, $1.flatMap(makeUniqueImageTitles))
@@ -101,14 +106,14 @@ private extension UIMenuController {
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
       let block: @convention(block) (AnyObject, CGRect, UIView) -> () = {
         if let firstResp = UIResponder.mik_firstResponder {
-          swizzle(class: type(of: firstResp.mik_responderToSwizzle))
+          swizzle(type(of: firstResp.mik_responderToSwizzle))
         } else {
           // Must call `becomeFirstResponder` since there's no firstResponder yet
           if let n = $2.mik_viewControllerInChain {
-            swizzle(class: type(of: n))
+            swizzle(type(of: n))
             n.becomeFirstResponder()
           } else {
-            swizzle(class: type(of: $2))
+            swizzle(type(of: $2))
             $2.becomeFirstResponder()
           }
         }

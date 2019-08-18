@@ -31,6 +31,11 @@ func setNewIMPWithBlock<T>(_ block: T, forSelector selector: Selector, toClass k
     return associatedBoxForKey(key, initialValue: nil)
   }
 
+  var actionFilterBox: Box<ActionFilter?> {
+    let key: StaticString = #function
+    return associatedBoxForKey(key, initialValue: nil)
+  }
+
   func associatedBoxForKey<T>(_ key: StaticString, initialValue: @autoclosure () -> T) -> Box<T> {
     guard let box = objc_getAssociatedObject(self, key.utf8Start) as? Box<T> else {
       let box = Box(initialValue())
