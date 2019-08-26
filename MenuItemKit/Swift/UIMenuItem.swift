@@ -9,7 +9,7 @@
 import UIKit
 import ObjectiveC.runtime
 #if !NON_SPM
-import ObjCSwizzlings
+@_exported import ObjCSwizzlings
 #endif
 
 public extension UIMenuItem {
