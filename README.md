@@ -6,14 +6,26 @@
 
 ![Screenshot](Screenshot.png)
 
+## Install
 
-## How to use
+### Swift Package
 
+Add this repo URL to your Swift package dependencies.
+
+### CocoaPods
+
+```ruby
+pod 'MenuItemKit', '~> 3.2.2'
+```
+
+### Xcode subproject
 1. Add the `MenuItemKit` repository as a submodule of your application’s repository.
 2. Drag and drop `MenuItemKit.xcodeproj` into your application’s Xcode project or workspace.
 3. On the “General” tab of your application target’s settings, add `MenuItemKit.framework` to the “Embedded Binaries” section.
 
-If you would prefer to use Carthage or CocoaPods, please pull request.
+If you would prefer to use Carthage, please pull request.
+
+## How to use
 
 `MenuItemKit` is very easy to adopt, it provides only 2 APIs:
 
