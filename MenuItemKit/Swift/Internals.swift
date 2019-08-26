@@ -6,7 +6,11 @@
 //  Copyright © 2016 lazyapps. All rights reserved.
 //
 
+import UIKit
 import ObjectiveC.runtime
+#if !NON_SPM
+import ObjCSwizzlings
+#endif
 
 let imageItemIdetifier = "\u{FEFF}\u{200B}"
 

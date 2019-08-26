@@ -7,38 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E053D579204308C7001D01B5 /* UIMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E053D578204308C7001D01B5 /* UIMenuController.swift */; };
-		E0DCD1A11C4B957A00CF23F8 /* Swizzlings.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DCD1A01C4B957A00CF23F8 /* Swizzlings.m */; };
+		E0E372012314123300153746 /* Internals.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E371FB2314123300153746 /* Internals.swift */; };
+		E0E372022314123300153746 /* Swizzlings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E371FC2314123300153746 /* Swizzlings.swift */; };
+		E0E372032314123300153746 /* UIMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E371FD2314123300153746 /* UIMenuController.swift */; };
+		E0E372042314123300153746 /* UIMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E371FE2314123300153746 /* UIMenuItem.swift */; };
+		E0E372052314123300153746 /* Swizzlings.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E372002314123300153746 /* Swizzlings.m */; };
+		E0E372082314193400153746 /* Headers.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E372072314193400153746 /* Headers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E0EFAE4E1C49F99300334D78 /* MenuItemKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EFAE4D1C49F99300334D78 /* MenuItemKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E0EFAE551C49F99400334D78 /* MenuItemKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EFAE4A1C49F99300334D78 /* MenuItemKit.framework */; };
-		E0EFAE5A1C49F99400334D78 /* MenuItemKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EFAE591C49F99400334D78 /* MenuItemKitTests.swift */; };
-		E0EFAE651C49F9A000334D78 /* UIMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EFAE641C49F9A000334D78 /* UIMenuItem.swift */; };
-		E0EFAEA91C4AB8B300334D78 /* Swizzlings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EFAEA81C4AB8B300334D78 /* Swizzlings.swift */; };
-		E0EFAEAB1C4AB8D800334D78 /* Internals.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EFAEAA1C4AB8D800334D78 /* Internals.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		E0EFAE561C49F99400334D78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E0EFAE411C49F99300334D78 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E0EFAE491C49F99300334D78;
-			remoteInfo = MenuItemKit;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		E053D578204308C7001D01B5 /* UIMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMenuController.swift; sourceTree = "<group>"; };
-		E0DCD1A01C4B957A00CF23F8 /* Swizzlings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Swizzlings.m; sourceTree = "<group>"; };
+		E0E371FB2314123300153746 /* Internals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Internals.swift; sourceTree = "<group>"; };
+		E0E371FC2314123300153746 /* Swizzlings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swizzlings.swift; sourceTree = "<group>"; };
+		E0E371FD2314123300153746 /* UIMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMenuController.swift; sourceTree = "<group>"; };
+		E0E371FE2314123300153746 /* UIMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMenuItem.swift; sourceTree = "<group>"; };
+		E0E372002314123300153746 /* Swizzlings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Swizzlings.m; sourceTree = "<group>"; };
+		E0E372072314193400153746 /* Headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Headers.h; sourceTree = "<group>"; };
 		E0EFAE4A1C49F99300334D78 /* MenuItemKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MenuItemKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0EFAE4D1C49F99300334D78 /* MenuItemKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuItemKit.h; sourceTree = "<group>"; };
 		E0EFAE4F1C49F99300334D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E0EFAE541C49F99400334D78 /* MenuItemKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuItemKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0EFAE591C49F99400334D78 /* MenuItemKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemKitTests.swift; sourceTree = "<group>"; };
-		E0EFAE5B1C49F99400334D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E0EFAE641C49F9A000334D78 /* UIMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMenuItem.swift; sourceTree = "<group>"; };
-		E0EFAEA81C4AB8B300334D78 /* Swizzlings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swizzlings.swift; sourceTree = "<group>"; };
-		E0EFAEAA1C4AB8D800334D78 /* Internals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Internals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,22 +36,41 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E0EFAE511C49F99400334D78 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E0EFAE551C49F99400334D78 /* MenuItemKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E0E371FA2314123300153746 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				E0E371FB2314123300153746 /* Internals.swift */,
+				E0E371FC2314123300153746 /* Swizzlings.swift */,
+				E0E371FD2314123300153746 /* UIMenuController.swift */,
+				E0E371FE2314123300153746 /* UIMenuItem.swift */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		E0E371FF2314123300153746 /* ObjCSwizzlings */ = {
+			isa = PBXGroup;
+			children = (
+				E0E372062314193400153746 /* include */,
+				E0E372002314123300153746 /* Swizzlings.m */,
+			);
+			path = ObjCSwizzlings;
+			sourceTree = "<group>";
+		};
+		E0E372062314193400153746 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E0E372072314193400153746 /* Headers.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 		E0EFAE401C49F99300334D78 = {
 			isa = PBXGroup;
 			children = (
 				E0EFAE4C1C49F99300334D78 /* MenuItemKit */,
-				E0EFAE581C49F99400334D78 /* MenuItemKitTests */,
 				E0EFAE4B1C49F99300334D78 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,7 +79,6 @@
 			isa = PBXGroup;
 			children = (
 				E0EFAE4A1C49F99300334D78 /* MenuItemKit.framework */,
-				E0EFAE541C49F99400334D78 /* MenuItemKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,22 +88,10 @@
 			children = (
 				E0EFAE4F1C49F99300334D78 /* Info.plist */,
 				E0EFAE4D1C49F99300334D78 /* MenuItemKit.h */,
-				E0EFAEAA1C4AB8D800334D78 /* Internals.swift */,
-				E0EFAE641C49F9A000334D78 /* UIMenuItem.swift */,
-				E053D578204308C7001D01B5 /* UIMenuController.swift */,
-				E0EFAEA81C4AB8B300334D78 /* Swizzlings.swift */,
-				E0DCD1A01C4B957A00CF23F8 /* Swizzlings.m */,
+				E0E371FF2314123300153746 /* ObjCSwizzlings */,
+				E0E371FA2314123300153746 /* Swift */,
 			);
 			path = MenuItemKit;
-			sourceTree = "<group>";
-		};
-		E0EFAE581C49F99400334D78 /* MenuItemKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				E0EFAE591C49F99400334D78 /* MenuItemKitTests.swift */,
-				E0EFAE5B1C49F99400334D78 /* Info.plist */,
-			);
-			path = MenuItemKitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,6 +102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0EFAE4E1C49F99300334D78 /* MenuItemKit.h in Headers */,
+				E0E372082314193400153746 /* Headers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,24 +127,6 @@
 			productReference = E0EFAE4A1C49F99300334D78 /* MenuItemKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		E0EFAE531C49F99400334D78 /* MenuItemKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E0EFAE611C49F99400334D78 /* Build configuration list for PBXNativeTarget "MenuItemKitTests" */;
-			buildPhases = (
-				E0EFAE501C49F99400334D78 /* Sources */,
-				E0EFAE511C49F99400334D78 /* Frameworks */,
-				E0EFAE521C49F99400334D78 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E0EFAE571C49F99400334D78 /* PBXTargetDependency */,
-			);
-			name = MenuItemKitTests;
-			productName = MenuItemKitTests;
-			productReference = E0EFAE541C49F99400334D78 /* MenuItemKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -164,10 +140,6 @@
 					E0EFAE491C49F99300334D78 = {
 						CreatedOnToolsVersion = 7.3;
 						LastSwiftMigration = 1020;
-					};
-					E0EFAE531C49F99400334D78 = {
-						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -185,20 +157,12 @@
 			projectRoot = "";
 			targets = (
 				E0EFAE491C49F99300334D78 /* MenuItemKit */,
-				E0EFAE531C49F99400334D78 /* MenuItemKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E0EFAE481C49F99300334D78 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E0EFAE521C49F99400334D78 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -212,31 +176,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E053D579204308C7001D01B5 /* UIMenuController.swift in Sources */,
-				E0EFAEAB1C4AB8D800334D78 /* Internals.swift in Sources */,
-				E0EFAEA91C4AB8B300334D78 /* Swizzlings.swift in Sources */,
-				E0EFAE651C49F9A000334D78 /* UIMenuItem.swift in Sources */,
-				E0DCD1A11C4B957A00CF23F8 /* Swizzlings.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E0EFAE501C49F99400334D78 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E0EFAE5A1C49F99400334D78 /* MenuItemKitTests.swift in Sources */,
+				E0E372032314123300153746 /* UIMenuController.swift in Sources */,
+				E0E372042314123300153746 /* UIMenuItem.swift in Sources */,
+				E0E372012314123300153746 /* Internals.swift in Sources */,
+				E0E372052314123300153746 /* Swizzlings.m in Sources */,
+				E0E372022314123300153746 /* Swizzlings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E0EFAE571C49F99400334D78 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E0EFAE491C49F99300334D78 /* MenuItemKit */;
-			targetProxy = E0EFAE561C49F99400334D78 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E0EFAE5C1C49F99400334D78 /* Debug */ = {
@@ -363,15 +311,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = MenuItemKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DNON_SPM";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lazyapps.MenuItemKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
@@ -384,38 +336,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = MenuItemKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DNON_SPM";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lazyapps.MenuItemKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		E0EFAE621C49F99400334D78 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = MenuItemKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lazyapps.MenuItemKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		E0EFAE631C49F99400334D78 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = MenuItemKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lazyapps.MenuItemKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
 		};
@@ -436,15 +369,6 @@
 			buildConfigurations = (
 				E0EFAE5F1C49F99400334D78 /* Debug */,
 				E0EFAE601C49F99400334D78 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E0EFAE611C49F99400334D78 /* Build configuration list for PBXNativeTarget "MenuItemKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E0EFAE621C49F99400334D78 /* Debug */,
-				E0EFAE631C49F99400334D78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
