@@ -64,9 +64,9 @@ internal func swizzle(_ object: Any, shouldShowForAction: @escaping ActionFilter
     // `NSInvocation` is not allowed in Swift, so we just use AnyObject
     let selector = NSSelectorFromString("forwardInvocation:")
     let origIMP = class_getMethodImplementation(klass, selector)
-    typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> ()
+    typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject) -> Void
     let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
-    let block: @convention(block) (AnyObject, AnyObject) -> () = {
+    let block: @convention(block) (AnyObject, AnyObject) -> Void = {
       if UIMenuItem.isMenuItemKitSelector($1.selector) {
         guard let item = UIMenuController.shared.findMenuItemBySelector($1.selector) else { return }
         item.actionBox.value?(item)
@@ -86,9 +86,9 @@ private extension UIMenuController {
     if true {
       let selector = #selector(setter: menuItems)
       let origIMP = class_getMethodImplementation(self, selector)
-      typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject?) -> ()
+      typealias IMPType = @convention(c) (AnyObject, Selector, AnyObject?) -> Void
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
-      let block: @convention(block) (AnyObject, AnyObject?) -> () = {
+      let block: @convention(block) (AnyObject, AnyObject?) -> Void = {
         if let firstResp = UIResponder.mik_firstResponder {
           swizzle(type(of: firstResp.mik_responderToSwizzle))
         }
@@ -102,22 +102,23 @@ private extension UIMenuController {
     if true {
       let selector = #selector(setTargetRect(_:in:))
       let origIMP = class_getMethodImplementation(self, selector)
-      typealias IMPType = @convention(c) (AnyObject, Selector, CGRect, UIView) -> ()
+      typealias IMPType = @convention(c) (AnyObject, Selector, CGRect, UIView) -> Void
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
-      let block: @convention(block) (AnyObject, CGRect, UIView) -> () = {
-        if let firstResp = UIResponder.mik_firstResponder {
-          swizzle(type(of: firstResp.mik_responderToSwizzle))
-        } else {
-          // Must call `becomeFirstResponder` since there's no firstResponder yet
-          if let n = $2.mik_viewControllerInChain {
-            swizzle(type(of: n))
-            n.becomeFirstResponder()
-          } else {
-            swizzle(type(of: $2))
-            $2.becomeFirstResponder()
-          }
-        }
+      let block: @convention(block) (AnyObject, CGRect, UIView) -> Void = {
+        swizzleUIObject($2);
+        origIMPC($0, selector, $1, $2)
+      }
 
+      setNewIMPWithBlock(block, forSelector: selector, toClass: self)
+    }
+
+    if #available(iOS 13.0, *) {
+      let selector = #selector(showMenu(from:rect:))
+      let origIMP = class_getMethodImplementation(self, selector)
+      typealias IMPType = @convention(c) (AnyObject, Selector, UIView, CGRect) -> Void
+      let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
+      let block: @convention(block) (AnyObject, UIView, CGRect) -> Void = {
+        swizzleUIObject($1);
         origIMPC($0, selector, $1, $2)
       }
 
@@ -161,9 +162,9 @@ private extension UILabel {
     if true {
       let selector = #selector(drawText(in:))
       let origIMP = class_getMethodImplementation(self, selector)
-      typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> ()
+      typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> Void
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
-      let block: @convention(block) (UILabel, CGRect) -> () = { label, rect in
+      let block: @convention(block) (UILabel, CGRect) -> Void = { label, rect in
         guard
           let item = UIMenuController.shared.findImageItemByTitle(label.text),
           let _ = item.imageBox.value
@@ -176,9 +177,9 @@ private extension UILabel {
     if true {
       let selector = #selector(layoutSubviews)
       let origIMP = class_getMethodImplementation(self, selector)
-      typealias IMPType = @convention(c) (UILabel, Selector) -> ()
+      typealias IMPType = @convention(c) (UILabel, Selector) -> Void
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
-      let block: @convention(block) (UILabel) -> () = { label in
+      let block: @convention(block) (UILabel) -> Void = { label in
         guard
           let item = UIMenuController.shared.findImageItemByTitle(label.text),
           let image = item.imageBox.value
@@ -204,9 +205,9 @@ private extension UILabel {
     if true {
       let selector = #selector(setter: frame)
       let origIMP = class_getMethodImplementation(self, selector)
-      typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> ()
+      typealias IMPType = @convention(c) (UILabel, Selector, CGRect) -> Void
       let origIMPC = unsafeBitCast(origIMP, to: IMPType.self)
-      let block: @convention(block) (UILabel, CGRect) -> () = { label, rect in
+      let block: @convention(block) (UILabel, CGRect) -> Void = { label, rect in
         let isImageItem = UIMenuController.shared.findImageItemByTitle(label.text)?.imageBox.value != nil
         let rect = isImageItem ? label.superview?.bounds ?? rect : rect
         origIMPC(label, selector, rect)
@@ -265,5 +266,20 @@ private extension UIResponder {
   var mik_responderToSwizzle: UIResponder {
     if let vc = mik_viewControllerInChain { return vc }
     return self
+  }
+}
+
+private func swizzleUIObject(_ uiobj: UIView) {
+  if let firstResp = UIResponder.mik_firstResponder {
+    swizzle(type(of: firstResp.mik_responderToSwizzle))
+  } else {
+  // Must call `becomeFirstResponder` since there's no firstResponder yet
+    if let n = uiobj.mik_viewControllerInChain {
+      swizzle(type(of: n))
+      n.becomeFirstResponder()
+    } else {
+      swizzle(type(of: uiobj))
+      uiobj.becomeFirstResponder()
+    }
   }
 }
