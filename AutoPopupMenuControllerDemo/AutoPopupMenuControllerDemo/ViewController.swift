@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     let controller = UIMenuController.shared
     let textItem = UIMenuItem(title: "Toggle Color Item") { [weak self] _ in
-      self?.showAlertWithTitle("text item tapped")
+      self?.showAlertWithTitle("Toggle item tapped")
       self?.showsColorItem = !(self?.showsColorItem ?? true)
     }
 

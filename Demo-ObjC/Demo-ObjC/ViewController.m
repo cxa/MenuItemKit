@@ -41,12 +41,20 @@
     UIMenuItem *item2 = [[UIMenuItem alloc] mik_initWithTitle:@"2" action:action];
     UIMenuItem *item3 = [[UIMenuItem alloc] mik_initWithTitle:@"3" action:action];
     controller.menuItems = @[item1, item2, item3];
-    [controller setMenuVisible:YES animated:YES];
+    if (@available(iOS 13.0, *)) {
+      controller.menuVisible = YES;
+    } else {
+      [controller setMenuVisible:YES animated:YES];
+    }
   }];
   
   controller.menuItems = @[textItem, imageItem, colorImageItem, nextItem];
-  [controller setTargetRect:self.button.bounds inView:self.button];
-  [controller setMenuVisible:YES animated:YES];
+  if (@available(iOS 13.0, *)) {
+    [controller showMenuFromView:self.button rect:self.button.bounds];
+  } else {
+    [controller setTargetRect:self.button.bounds inView:self.button];
+    [controller setMenuVisible:YES animated:YES];
+  }
 }
 
 - (void)showAlertWithTitle:(NSString *)title
