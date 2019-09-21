@@ -1,7 +1,7 @@
 # coding: utf-8
 Pod::Spec.new do |s|
   s.name         = "MenuItemKit"
-  s.version      = "3.2.2"
+  s.version      = "4.0.0"
   s.summary      = "MenuItemKit provides image and closure(block) support for UIMenuItem."
   s.author       = "CHEN Xian’an <xianan.chen@gmail.com>"
   s.homepage     = "https://github.com/cxa/MenuItemKit"
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.source_files = 'MenuItemKit/**/*.{h,m,swift}'
   s.requires_arc = true
   s.frameworks   = 'UIKit'
-  s.swift_version= "5.0"
+  s.swift_version= "5.1"
   s.pod_target_xcconfig = {
     'OTHER_SWIFT_FLAGS' => '-DNON_SPM',
   }
