@@ -14,7 +14,7 @@ import ObjectiveC.runtime
 
 public extension UIMenuItem {
   @objc(mik_initWithTitle:image:action:)
-  convenience init(title: String, image: UIImage?, action: @escaping MenuItemAction) {
+  convenience init(title: String = "", image: UIImage?, action: @escaping MenuItemAction) {
     let title = image != nil ? title + imageItemIdetifier : title
     self.init(title: title, action: Selector(blockIdentifierPrefix + UUID.stripedString + ":"))
     imageBox.value = image
