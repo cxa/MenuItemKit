@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Headers.h"
+#import <MenuItemKit/Headers.h>
 
 //! Project version number for MenuItemKit.
 FOUNDATION_EXPORT double MenuItemKitVersionNumber;
