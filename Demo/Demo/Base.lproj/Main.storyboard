@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XBh-jw-gN5">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Demo_SPM" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MenuItemKit_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -19,27 +20,98 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYI-cb-k6z">
-                                <rect key="frame" x="275" y="285" width="51" height="30"/>
-                                <state key="normal" title="Tap Me"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYI-cb-k6z">
+                                <rect key="frame" x="149.5" y="433" width="115" height="30"/>
+                                <state key="normal" title="Customize Menu"/>
                                 <connections>
                                     <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0vJ-vp-Cdv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p9B-6S-vqR">
+                                <rect key="frame" x="107.5" y="493" width="199" height="30"/>
+                                <state key="normal" title="Customize Menu In WebView"/>
+                                <connections>
+                                    <segue destination="Wcb-YT-06E" kind="show" id="L0c-Mn-yCU"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="rYI-cb-k6z" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Yrz-AM-Da9"/>
+                            <constraint firstItem="p9B-6S-vqR" firstAttribute="top" secondItem="rYI-cb-k6z" secondAttribute="bottom" constant="30" id="MjE-NR-gVD"/>
+                            <constraint firstItem="rYI-cb-k6z" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="R2N-RF-n3Z"/>
+                            <constraint firstItem="p9B-6S-vqR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ud7-iG-VB4"/>
                             <constraint firstItem="rYI-cb-k6z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hao-L1-gEx"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="vlJ-k6-ao6"/>
                     <connections>
                         <outlet property="button" destination="rYI-cb-k6z" id="aZV-be-FcQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="25" y="29"/>
+            <point key="canvasLocation" x="830" y="29"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="spa-Yw-PWh">
+            <objects>
+                <viewController id="Wcb-YT-06E" customClass="WebViewController" customModule="MenuItemKit_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sK1-W0-Prf"/>
+                        <viewControllerLayoutGuide type="bottom" id="S4y-xI-oIt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="O5k-fq-n89">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CZa-3c-EmB" customClass="CustomMenuWebView" customModule="MenuItemKit_Swift" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="S4y-xI-oIt" firstAttribute="top" secondItem="CZa-3c-EmB" secondAttribute="bottom" id="6zv-TR-4ym"/>
+                            <constraint firstItem="CZa-3c-EmB" firstAttribute="leading" secondItem="O5k-fq-n89" secondAttribute="leading" id="Stg-lv-QhQ"/>
+                            <constraint firstAttribute="trailing" secondItem="CZa-3c-EmB" secondAttribute="trailing" id="bba-Mt-hjC"/>
+                            <constraint firstItem="CZa-3c-EmB" firstAttribute="top" secondItem="sK1-W0-Prf" secondAttribute="bottom" id="ygy-9p-xzT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="J6z-0w-PtU"/>
+                    <connections>
+                        <outlet property="webView" destination="CZa-3c-EmB" id="KPa-Uu-pIY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qI9-K3-rka" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1730" y="29"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="LcJ-FI-Pfx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XBh-jw-gN5" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ReH-0a-eaq">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="GJ0-7P-EbQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g4X-cH-TTj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="24.637681159420293" y="28.794642857142854"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

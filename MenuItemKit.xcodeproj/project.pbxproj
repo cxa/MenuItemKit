@@ -113,9 +113,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E0EFAE5E1C49F99400334D78 /* Build configuration list for PBXNativeTarget "MenuItemKit" */;
 			buildPhases = (
+				E0EFAE471C49F99300334D78 /* Headers */,
 				E0EFAE451C49F99300334D78 /* Sources */,
 				E0EFAE461C49F99300334D78 /* Frameworks */,
-				E0EFAE471C49F99300334D78 /* Headers */,
 				E0EFAE481C49F99300334D78 /* Resources */,
 			);
 			buildRules = (

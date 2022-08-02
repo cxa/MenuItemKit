@@ -38,3 +38,11 @@ private extension UUID {
     return UUID().uuidString.replacingOccurrences(of: "-", with: "_")
   }
 }
+
+public extension UIMenuItem {
+    convenience init(title: String, image: UIImage?, action: Selector) {
+        let title = image != nil ? title + imageItemIdetifier : title
+        self.init(title: title, action: action)
+        imageBox.value = image
+    }
+}

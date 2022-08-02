@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		963AAFF22898D9BF003FA8C2 /* CustomMenuWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963AAFF12898D9BF003FA8C2 /* CustomMenuWebView.swift */; };
+		963AAFF42898DC64003FA8C2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963AAFF32898DC64003FA8C2 /* WebViewController.swift */; };
+		963AAFF72898DCD3003FA8C2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 963AAFF62898DCD3003FA8C2 /* WebKit.framework */; };
 		E0EFAE731C4A050000334D78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EFAE721C4A050000334D78 /* AppDelegate.swift */; };
 		E0EFAE751C4A050000334D78 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EFAE741C4A050000334D78 /* ViewController.swift */; };
 		E0EFAE781C4A050000334D78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0EFAE761C4A050000334D78 /* Main.storyboard */; };
@@ -48,6 +51,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		963AAFF12898D9BF003FA8C2 /* CustomMenuWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMenuWebView.swift; sourceTree = "<group>"; };
+		963AAFF32898DC64003FA8C2 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		963AAFF62898DCD3003FA8C2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E0EFAE6F1C4A050000334D78 /* MenuItemKit-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MenuItemKit-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0EFAE721C4A050000334D78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0EFAE741C4A050000334D78 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				963AAFF72898DCD3003FA8C2 /* WebKit.framework in Frameworks */,
 				E0EFAE8D1C4A088400334D78 /* MenuItemKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,12 +77,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		963AAFF52898DCD3003FA8C2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				963AAFF62898DCD3003FA8C2 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E0EFAE661C4A050000334D78 = {
 			isa = PBXGroup;
 			children = (
 				E0EFAE841C4A059700334D78 /* MenuItemKit.xcodeproj */,
 				E0EFAE711C4A050000334D78 /* Demo */,
 				E0EFAE701C4A050000334D78 /* Products */,
+				963AAFF52898DCD3003FA8C2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,6 +108,8 @@
 			children = (
 				E0EFAE721C4A050000334D78 /* AppDelegate.swift */,
 				E0EFAE741C4A050000334D78 /* ViewController.swift */,
+				963AAFF32898DC64003FA8C2 /* WebViewController.swift */,
+				963AAFF12898D9BF003FA8C2 /* CustomMenuWebView.swift */,
 				E0EFAE761C4A050000334D78 /* Main.storyboard */,
 				E0EFAE791C4A050000334D78 /* Assets.xcassets */,
 				E0EFAE7B1C4A050000334D78 /* LaunchScreen.storyboard */,
@@ -200,7 +218,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0EFAE751C4A050000334D78 /* ViewController.swift in Sources */,
+				963AAFF22898D9BF003FA8C2 /* CustomMenuWebView.swift in Sources */,
 				E0EFAE731C4A050000334D78 /* AppDelegate.swift in Sources */,
+				963AAFF42898DC64003FA8C2 /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
