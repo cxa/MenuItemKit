@@ -1,5 +1,8 @@
 # MenuItemKit
 
+> **Warning**
+> `UIMenuController` is deprecated from iOS 16. Use `UIEditMenuInteraction` instead.
+
 `MenuItemKit` provides image and block(closure) support for `UIMenuItem`.
 
 `MenuItemKit` is a Swift project but Objective-C is supported without any doubt.
