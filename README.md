@@ -1,7 +1,7 @@
-# MenuItemKit
-
 > **Warning**
 > `UIMenuController` is deprecated from iOS 16. Use `UIEditMenuInteraction` instead.
+
+# MenuItemKit
 
 `MenuItemKit` provides image and block(closure) support for `UIMenuItem`.
 
@@ -60,7 +60,7 @@ For menu items out of your control, you can use `static func installTo(responder
 
 ## About Me
 
-* Twitter: [@_cxa](https://twitter.com/_cxa)
+* Twitter: [@_realazy](https://twitter.com/_realazy)
 * Apps available in App Store: <http://lazyapps.com>
 * PayPal: xianan.chen+paypal 📧 gmail.com, buy me a cup of coffee if you find it's useful for you, thanks.
 
